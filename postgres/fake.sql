@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-INSERT INTO users(email)
+INSERT INTO waarneming(email)
 SELECT
   'user_' || seq || '@' || (
     CASE (RANDOM() * 2)::INT
@@ -15,7 +15,7 @@ FROM GENERATE_SERIES(1, 5) seq;
 INSERT INTO posts(user_id, title)
 WITH expanded AS (
   SELECT RANDOM(), seq, u.id AS user_id
-  FROM GENERATE_SERIES(1, 25) seq, users u
+  FROM GENERATE_SERIES(1, 25) seq, waarneming u
 ), shuffled AS (
   SELECT e.*
   FROM expanded e
@@ -39,7 +39,7 @@ FROM shuffled s;
 INSERT INTO comments(user_id, post_id, body)
 WITH expanded AS (
   SELECT RANDOM(), seq, u.id AS user_id, p.id AS post_id
-  FROM GENERATE_SERIES(1, 100) seq, users u, posts p
+  FROM GENERATE_SERIES(1, 100) seq, waarneming u, posts p
 ), shuffled AS (
   SELECT e.*
   FROM expanded e
